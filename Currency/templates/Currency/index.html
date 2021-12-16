@@ -1,36 +1,115 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title> Video Live Stream </title>
-  </head>
-  <body>
-<video id="player" controls autoplay></video>
-<button id="capture">Capture</button>
-<canvas id="canvas" width=320 height=240></canvas>
-<script>
-  const player = document.getElementById('player');
-  const canvas = document.getElementById('canvas');
-  const context = canvas.getContext('2d');
-  const captureButton = document.getElementById('capture');
+</head>
 
-  const constraints = {
-    video: true,
-  };
+<body>
+    <h1>{{ output }}</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% comment %} <input type="file" name="image" accept="image/*;capture=camera"> {% endcomment %}
+         {{ form }} 
+        <input type="submit" value="Upload">
+    </form>
 
-  captureButton.addEventListener('click', () => {
-    context.drawImage(player, 0, 0, canvas.width, canvas.height);
-
-    // Stop all video streams.
-   // player.srcObject.getVideoTracks().forEach(track => track.stop());
-});
-
-  navigator.mediaDevices.getUserMedia(constraints)
-    .then((stream) => {
-      // Attach the video stream to the video element and autoplay.
-      player.srcObject = stream;
-    });
-    </script>
 </body>
 
+<script>
+    var input = document.querySelector('input[type=file]'); // see Example 4
+    var answer = document.querySelector('h1');
+
+    const hello = new SpeechSynthesisUtterance("hello world")
+      window.speechSynthesis.speak(hello)
+    
+    var k = 0
+
+    if (answer.value !== ""){
+      const a = "{{ output }}";
+      k = 1
+
+      const utterance = new SpeechSynthesisUtterance(a)
+      window.speechSynthesis.speak(utterance)
+    
+      {% comment %} const testing = new SpeechSynthesisUtterance("this is a test")
+      window.speechSynthesis.speak(testing) {% endcomment %}
+    }
+
+    input.onchange = function() {
+        var file = input.files[0];
+
+        drawOnCanvas(file); // see Example 6
+        displayAsImage(file);
+        upload(file);
+        // see Example 7
+    };
+
+    function upload(file) {
+        var form = new FormData(),
+            xhr = new XMLHttpRequest();
+
+        form.append('image', file);
+        xhr.open('post', window.location.href, true);
+        xhr.send(form);
+    }
+
+    function drawOnCanvas(file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var dataURL = e.target.result,
+                c = document.querySelector('canvas'), // see Example 4
+                ctx = c.getContext('2d'),
+                img = new Image();
+
+            img.onload = function() {
+                c.width = img.width;
+                c.height = img.height;
+                ctx.drawImage(img, 0, 0);
+            };
+
+            img.src = dataURL;
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    function displayAsImage(file) {
+        var imgURL = URL.createObjectURL(file),
+            img = document.createElement('img');
+
+        img.onload = function() {
+            URL.revokeObjectURL(imgURL);
+        };
+
+        img.src = imgURL;
+        document.body.appendChild(img);
+    }
+
+    {% comment %} answer.onload = function() {
+      const a = "{{ output }}";
+
+      const utterance = new SpeechSynthesisUtterance(a)
+      window.speechSynthesis.speak(utterance)
+    
+      const testing = new SpeechSynthesisUtterance("this is a test")
+      window.speechSynthesis.speak(testing)
+  }; {% endcomment %}
+
+    if(k === 0){
+      if (answer.value !== ""){
+        const a = "{{ output }}";
+  
+        const utterance = new SpeechSynthesisUtterance(a)
+        window.speechSynthesis.speak(utterance)
+      
+        {% comment %} const testing = new SpeechSynthesisUtterance("this is a test")
+        window.speechSynthesis.speak(testing) {% endcomment %}
+      }
+    };
+
+    
+
+</script>
 
 </html>

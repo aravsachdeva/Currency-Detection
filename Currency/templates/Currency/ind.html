@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Video Live Stream </title>
+</head>
+
+<body>
+
+    <video id="player" controls autoplay></video>
+    <button id="capture">Capture</button>
+    <canvas id="canvas" width=320 height=240></canvas>
+    <script>
+        var csrftoken = '{{ csrf_token }}';
+
+        const player = document.getElementById('player');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const captureButton = document.getElementById('capture');
+
+        const constraints = {
+            video: true,
+        };
+
+        captureButton.addEventListener('click', () => {
+
+            const picture = context.drawImage(player, 0, 0, canvas.width, canvas.height);
+
+            let image_data_url = canvas.toDataURL('image/jpeg');
+
+            console.log(image_data_url);
+
+            const XHR = new XMLHttpRequest();
+
+            XHR.open('POST', window.location.href + '');
+
+
+            XHR.setRequestHeader("Accept", "application/json");
+            XHR.setRequestHeader("Content-Type", "application/json");
+
+            XHR.send({
+                'image_url': image_data_url,
+                'csrftoken': csrftoken
+            });
+
+
+
+
+
+            // Stop all video streams.
+            // player.srcObject.getVideoTracks().forEach(track => track.stop());
+        });
+
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then((stream) => {
+                // Attach the video stream to the video element and autoplay.
+                player.srcObject = stream;
+            });
+
+
+        var a = "{{output}}";
+
+        function speak(a) {
+            const utterance = new SpeechSynthesisUtterance(a)
+            window.speechSynthesis.speak(utterance)
+        }
+    </script>
+</body>
+
+
+</html>

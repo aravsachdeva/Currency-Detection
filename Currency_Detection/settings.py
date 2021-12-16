@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'Currency',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,10 +44,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -72,6 +74,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Currency_Detection.wsgi.application'
 
+CORS_ALLOWED_ORIGINS = [
+    'http://*',
+    'https://*',
+
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
