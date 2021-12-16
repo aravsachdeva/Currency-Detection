@@ -22,8 +22,8 @@ def index(request):
             print(form)
             image = form.cleaned_data.get('file')
             print("recieved image")
-            img = image.convert("RGB")
-            predictingDenomination(img)
+            img = image
+            predictingDenomination(image)
             output = showOutput(image)
             print('output')
             return render(request, 'Currency/index.html', {'output': output})

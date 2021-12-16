@@ -32,7 +32,7 @@ def showOutput(picture):
 
 
     for i in range(len(prediction_groups[0])):
-        result = [ m[0] for m in [l[i] for l in prediction_groups]]
+        result = [m[0] for m in [l[i] for l in prediction_groups]]
 
         print(result)
         stringResult = 'a'

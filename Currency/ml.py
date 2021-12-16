@@ -35,14 +35,14 @@ def predictingDenomination(image):
     print(np.argmax(prediction))
 
 
-    dct = {
-        1 : "1 Dollar",
-        2: "10 Dollars",
-        3: "100 Dollars"
-    }
+    # dct = {
+    #     1 : "1 Dollar",
+    #     2: "10 Dollars",
+    #     3: "100 Dollars"
+    # }
 
-    print(dct[1])
-    return dct[1]
+    # print(dct[1])
+    # return dct[1]
 
     return(np.argmax(prediction))
 
