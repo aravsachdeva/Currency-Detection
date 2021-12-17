@@ -1,3 +1,4 @@
+import PIL
 from django.http import HttpResponse, StreamingHttpResponse
 from django.shortcuts import render, redirect
 from PIL import Image
@@ -22,11 +23,17 @@ def index(request):
             print(form)
             image = form.cleaned_data.get('file')
             print("recieved image")
-            img = image
-            predictingDenomination(image)
+            img = Image.open(image).convert("RGB")
+
+            model1 = predictingDenomination(img)
+
+            modelPredict = model1[0]
+            modelAccuracy = model1[1]
+
             output = showOutput(image)
-            print('output')
-            return render(request, 'Currency/index.html', {'output': output})
+            print(output)
+            
+            return render(request, 'Currency/index.html', {'output' : output, 'modelOutput' : modelPredict, 'modelAccuracy' : modelAccuracy})
     form = ImageForm()
     return render(request, 'Currency/index.html', {'form' : form})
 

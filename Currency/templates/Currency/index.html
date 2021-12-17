@@ -7,6 +7,9 @@
 
 <body>
     <h1>{{ output }}</h1>
+    {% if modelOutput %}
+    <h2>Model Denomination is {{ modelOutput }} with an accuracy of {{ modelAccuracy }}</h2>
+    {% endif %}
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% comment %} <input type="file" name="image" accept="image/*;capture=camera"> {% endcomment %}
@@ -20,13 +23,13 @@
     var input = document.querySelector('input[type=file]'); // see Example 4
     var answer = document.querySelector('h1');
 
-    const hello = new SpeechSynthesisUtterance("hello world")
-      window.speechSynthesis.speak(hello)
+    const hello = new SpeechSynthesisUtterance("Method 1:  Model Denomination is {{ modelOutput }} with an accuracy of {{ modelAccuracy }}")
+      window.speechSynthesis.speak(hello) 
     
     var k = 0
 
     if (answer.value !== ""){
-      const a = "{{ output }}";
+      const a = "Method 2:  {{ output }}";
       k = 1
 
       const utterance = new SpeechSynthesisUtterance(a)
@@ -77,6 +80,9 @@
     function displayAsImage(file) {
         var imgURL = URL.createObjectURL(file),
             img = document.createElement('img');
+
+        img.style.width = "40vh"
+        img.style.height = "auto"
 
         img.onload = function() {
             URL.revokeObjectURL(imgURL);

@@ -34,22 +34,31 @@ def predictingDenomination(image):
     print(prediction)
     print(np.argmax(prediction))
 
+    termIndex = np.argmax(prediction)
 
-    # dct = {
-    #     1 : "1 Dollar",
-    #     2: "10 Dollars",
-    #     3: "100 Dollars"
-    # }
+    if termIndex == 0:
+        result = '1 DOLLAR BILL'
+    elif termIndex == 1:
+        result = '5 DOLLAR BILL'
+    elif termIndex == 2:
+        result = '10 DOLLAR BILL'
+    elif termIndex == 3:
+        result = '20 DOLLAR BILL'
+    elif termIndex == 4:
+        result = '50 DOLLAR BILL'
+    elif termIndex == 5:
+        result = '100 DOLLAR BILL'
 
-    # print(dct[1])
-    # return dct[1]
-
-    return(np.argmax(prediction))
+    print(result)
+    
+    maxValue = (np.max(prediction))
+    print(maxValue)
+    return(result, maxValue)
 
 
 if __name__ == "__main__":
     PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
-    image = Image.open(os.path.join(PROJECT_PATH,"US100.png")).convert("RGB")
+    image = Image.open(os.path.join(PROJECT_PATH,"100.png")).convert("RGB")
     predictingDenomination(image)
 
 
