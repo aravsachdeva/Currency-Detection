@@ -38,10 +38,6 @@ def index(request):
     return render(request, 'Currency/index.html', {'form' : form})
 
 
-    
-
-
-
 # Every time you call the phone and laptop camera method gets frame
 # More info found in camera.py
 def gen(camera):

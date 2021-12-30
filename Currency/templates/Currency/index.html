@@ -5,10 +5,10 @@
     <title> Video Live Stream </title>
 </head>
 
-<body>
-    <h1>Using Keras OCR Model:  {{ output }}</h1>
+<body style="background-color:lightgreen;">
+    <h1>MY MONEY</h1>
     {% if modelOutput %}
-    <h2>Using Teachable Machine:  Model Denomination is {{ modelOutput }} with an accuracy of {{ modelAccuracy }}</h2>
+    <h2>Model Denomination is {{ modelOutput }}</h2>
     {% endif %}
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -20,16 +20,17 @@
 </body>
 
 <script>
-    var input = document.querySelector('input[type=file]'); // see Example 4
+    var input = document.querySelector('input[type=file]'); 
     var answer = document.querySelector('h1');
 
-    const hello = new SpeechSynthesisUtterance("Using Teachable Machine:  Model Denomination is {{ modelOutput }} with an accuracy of {{ modelAccuracy }}")
+    const hello = new SpeechSynthesisUtterance("Bill Denomination is {{ modelOutput }}")
       window.speechSynthesis.speak(hello) 
     
     var k = 0
 
     if (answer.value !== ""){
-      const a = "Method 2:  {{ output }}";
+      {% comment %} const a = "Bill Denomination is {{ output }}"; {% endcomment %}
+      const a = "";
       k = 1
 
       const utterance = new SpeechSynthesisUtterance(a)
@@ -42,10 +43,10 @@
     input.onchange = function() {
         var file = input.files[0];
 
-        drawOnCanvas(file); // see Example 6
+        drawOnCanvas(file); 
         displayAsImage(file);
         upload(file);
-        // see Example 7
+
     };
 
     function upload(file) {
@@ -61,7 +62,7 @@
         var reader = new FileReader();
         reader.onload = function(e) {
             var dataURL = e.target.result,
-                c = document.querySelector('canvas'), // see Example 4
+                c = document.querySelector('canvas'), 
                 ctx = c.getContext('2d'),
                 img = new Image();
 

@@ -35,28 +35,28 @@ def showOutput(picture):
         result = [m[0] for m in [l[i] for l in prediction_groups]]
 
         print(result)
-        if(result[0].startswith('wash')):
+        if(result[0].startswith('wash') or result[0].endswith('1') or result[0].endswith('one')):
             stringResult = '1 DOLLAR BILL'
             print(result)
             break
         # cincole, 
-        elif(result[0].startswith('linc')):
+        elif(result[0].startswith('linc') or result[0].endswith('5')):
             stringResult = '5 DOLLAR BILL'
             print(result)
             break
-        elif(result[0].startswith('hami')):
+        elif(result[0].startswith('hami') or result[0].endswith('10')):
             stringResult = '10 DOLLAR BILL'
             print(result)
             break
-        elif(result[0].startswith('jacks')):
+        elif(result[0].startswith('jacks') or result[0].endswith('20')):
             stringResult = '20 DOLLAR BILL'
             print(result)
             break
-        elif(result[0].startswith('gran')):
+        elif(result[0].startswith('gran') or result[0].endswith('50')):
             stringResult = '50 DOLLAR BILL'
             print(result)
             break
-        elif(result[0].startswith('fran')):
+        elif(result[0].startswith('fran') or result[0].endswith('100')):
             stringResult = '100 DOLLAR BILL'
             print(result)
             break
